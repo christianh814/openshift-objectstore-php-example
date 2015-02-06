@@ -34,7 +34,7 @@ echo "<p>";
 
 if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
   echo "File has been successfully uploaded.\n";
-  shell_exec("curl -s -X GET -H \"X-Auth-Token:$ufotoken\" $ufocontainer -T $uploadfile ");
+  shell_exec("curl -s -X PUT -H \"X-Auth-Token:$ufotoken\" $ufocontainer -T $uploadfile ");
   foreach ($objects as $cachefile) {
     if (file_exists($cachefile)) {
       shell_exec("true");
