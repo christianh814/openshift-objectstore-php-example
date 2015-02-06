@@ -25,3 +25,12 @@ $ufocontainer = "";
 ```
 
 The `<app name>/upload.php` file is commented with examples
+
+After you added this information deploy the changes
+
+```
+cd <app name>
+git add -A .
+git commit -am "added object storage config"
+git push
+```
