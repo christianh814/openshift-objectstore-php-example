@@ -16,7 +16,7 @@ END;
 echo $uploadform;
 if ($handle = opendir($datadir)) {
    while (false !== ($file = readdir($handle))) {
-          if ($file != "." && $file != ".." && $file != "index.php" && $file != "OpenStack.php" && $file != "upload.php" && $file != ".openshift" && $file != ".vimrc" && $file != ".bash_profile" && $file != ".bash_history") {
+          if ($file != "." && $file != ".." && $file != "index.php" && $file != "OpenStack.php" && $file != "README.md" && $file != "upload.php" && $file != ".openshift" && $file != ".vimrc" && $file != ".bash_profile" && $file != ".bash_history") {
             $thelist .= '<li><a href="'.$file.'">'.$file.'</a></li>';
             /* $thelist .= '<li><a href="'. $datadir . $file . '">'.$file.'</a></li>'; */
           }
