@@ -15,7 +15,7 @@ echo $uploadform;
 if ($handle = opendir($datadir)) {
    while (false !== ($file = readdir($handle))) {
           /* This is to exclude files from being shown on the screen - probably a better way of doing this */
-          if ($file != "." && $file != ".." && $file != "index.php" && $file != "OpenStack.php" && $file != "README.md" && $file != "upload.php" && $file != ".openshift" && $file != ".vimrc" && $file != ".bash_profile" && $file != ".bash_history") {
+          if ($file != "." && $file != ".." && $file != "index.php" && $file != "OpenStack.php" && $file != "README.md" && $file != "upload.php" && $file != ".openshift" && $file != ".vimrc" && $file != ".bash_profile" && $file != ".bash_history" && $file != "config.php") {
             $thelist .= '<li><a href="'.$file.'">'.$file.'</a></li>';
             /* $thelist .= '<li><a href="'. $datadir . $file . '">'.$file.'</a></li>'; */
           }
