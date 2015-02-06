@@ -6,10 +6,30 @@ $gohome = getenv('OPENSHIFT_APP_DNS');
 /* $uploaddir = './uploads/'; */
 $uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
 
+/* CUSTOM VARIABLES - Enter your ObjStore  info here */
+$ufouser = "";
+$ufovol = "";
+$ufopass = "";
+$ufoAuthURL = "";
+$ufocontainer = "";
+/* END CUSTOM VARIABLES*/
+$ufotoken = shell_exec("curl -s -i -H X-Storage-User:$ufovol:$ufouser -H X-Storage-Pass:$ufopass -k $ufoAuthURL | grep X-Auth-Token | awk -F' ' '{print $2}' ");
+$ufoobj = shell_exec("curl -s -X GET -H \"X-Auth-Token:$ufotoken\" $ufocontainer ");
+$objects = preg_split('/\s+/', trim($ufoobj));
+
+
 echo "<p>";
 
 if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
   echo "File has been successfully uploaded.\n";
+  shell_exec("curl -s -X GET -H \"X-Auth-Token:$ufotoken\" $ufocontainer -T $uploadfile ");
+  foreach ($objects as $cachefile) {
+    if (file_exists($cachefile)) {
+      shell_exec("true");
+    } else {
+      shell_exec("curl -O -s -X GET -H \"X-Auth-Token:$ufotoken\" $ufocontainer/$cachefile ");
+    }
+  }
   } else {
      echo "Upload failed";
      }
