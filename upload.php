@@ -25,6 +25,7 @@ $ufopass = "";
 $ufoAuthURL = "";
 $ufocontainer = "";
 /* END CUSTOM VARIABLES*/
+
 $ufotoken = shell_exec("curl -s -i -H X-Storage-User:$ufovol:$ufouser -H X-Storage-Pass:$ufopass -k $ufoAuthURL | grep X-Auth-Token | awk -F' ' '{print $2}' ");
 $ufoobj = shell_exec("curl -s -X GET -H \"X-Auth-Token:$ufotoken\" $ufocontainer ");
 $objects = preg_split('/\s+/', trim($ufoobj));
@@ -34,7 +35,12 @@ echo "<p>";
 
 if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
   echo "File has been successfully uploaded.\n";
-  shell_exec("curl -s -X PUT -H \"X-Auth-Token:$ufotoken\" $ufocontainer/$uploadfile -T $uploadfile ");
+  $putfile = $ufocontainer . '/' . basename($uploadfile);
+  ob_start($uploadfile);
+  $filelen = ob_get_length();
+  echo shell_exec("curl -s -X PUT -H \"X-Auth-Token:$ufotoken\" -H \"Content-Length:$filelen\" $putfile -T $uploadfile" );
+  echo '<br>';
+  echo "curl -s -X PUT -H \"X-Auth-Token:$ufotoken\" -H \"Content-Length:$filelen\" $putfile -T $uploadfile";
   foreach ($objects as $cachefile) {
     if (file_exists($cachefile)) {
       shell_exec("true");
