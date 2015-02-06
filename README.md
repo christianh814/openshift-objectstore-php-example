@@ -14,7 +14,7 @@ rhc create-app -s -a <app name> -t php-5.4  --from-code https://github.com/chris
 
 ## Configuration
 
-Edit the `<app name>/upload.php` file and set the following values
+Edit the `<app name>/config.php` file and set the following values
 
 ```
 $ufouser = ""; 
@@ -24,7 +24,7 @@ $ufoAuthURL = "";
 $ufocontainer = "";
 ```
 
-The `<app name>/upload.php` file is commented with examples
+The `<app name>/config.php` file is commented with examples
 
 After you added this information deploy the changes
 
